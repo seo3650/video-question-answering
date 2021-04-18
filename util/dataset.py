@@ -116,6 +116,8 @@ class MSVDQA(object):
         # if current bucket is ran out, use next bucket.
         if self.train_batch_idx[self.current_bucket] == self.train_batch_total[self.current_bucket]:
             self.current_bucket += 1
+            if self.train_batch_total[self.current_bucket] == 0:
+                self.has_train_batch = False
 
         if self.current_bucket == len(self.train_batch_total):
             self.has_train_batch = False

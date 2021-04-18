@@ -11,6 +11,7 @@ from util.preprocess import VideoVGGExtractor
 from util.preprocess import VideoC3DExtractor
 from util.preprocess import prune_embedding
 
+blacklist = [451, 745, 1106, 1120, 1258, 1357, 1475, 1595]
 
 def extract_vgg(video_directory):
     """Extract VGG features."""
@@ -22,12 +23,12 @@ def extract_vgg(video_directory):
 
     with tf.Graph().as_default(), tf.Session(config=sess_config) as sess:
         extractor = VideoVGGExtractor(20, sess)
-        for i in range(1, 1971):
-            video_path = os.path.join(
-                video_directory, 'vid' + str(i) + '.avi')
-            print('[VGG]', video_path)
-            vgg_features.append(extractor.extract(video_path))
-            # print(vgg_features[-1])
+        for i in range(1, 101):
+            if i not in blacklist:
+                video_path = os.path.join(
+                    video_directory, 'vid' + str(i) + '.avi')
+                print('[VGG]', video_path)
+                vgg_features.append(extractor.extract(video_path))
     return vgg_features
 
 
@@ -41,12 +42,12 @@ def extract_c3d(video_directory):
 
     with tf.Graph().as_default(), tf.Session(config=sess_config) as sess:
         extractor = VideoC3DExtractor(20, sess)
-        for i in range(1, 1971):
-            video_path = os.path.join(
-                video_directory, 'vid' + str(i) + '.avi')
-            print('[C3D]', video_path)
-            c3d_features.append(extractor.extract(video_path))
-            # print(c3d_features[-1])
+        for i in range(1, 101):
+            if i not in blacklist:
+                video_path = os.path.join(
+                    video_directory, 'vid' + str(i) + '.avi')
+                print('[C3D]', video_path)
+                c3d_features.append(extractor.extract(video_path))
     return c3d_features
 
 
@@ -150,8 +151,6 @@ def create_qa_encode(vttqa_path, vocab_path, answerset_path,
 
 
 def main():
-    os.makedirs('data/msvd_qa')
-
     extract_video_feature(os.path.join(sys.argv[1], 'video'),
                           'data/msvd_qa/video_feature_20.h5')
 
