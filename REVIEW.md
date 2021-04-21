@@ -23,7 +23,7 @@ python run_gra.py --mode [train/test] --gpu 0 --log log/evqa --dataset msvd_qa -
 ```
 
 # Result & Example
-acc: 28.06% (전체 dataset의 5%만 사용하였습니다.)   
+acc: 28.06% (Only 5% of the entire dataset was used.)   
    
 `Question: "how many cats are walking up to a fence in a door frame?"`
 ![Sample_video](./sample.gif)   
